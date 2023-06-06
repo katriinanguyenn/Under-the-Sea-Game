@@ -3,36 +3,26 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-public class Angelfish {
+public class Angelfish extends NiceAnimals {
 
-	private int x, y; //position of the submarine
-	private int vx, vy; //for movement
-	private Image img; 	
+ 	private Image img; 	
 	private AffineTransform tx;
-	
-	
+	private boolean dead = false;
 	public Angelfish() {
-		img = getImage("/imgs/angelfish.png"); //load the image for submarine
-		tx = AffineTransform.getTranslateInstance(0, 0);
-		init(x, y);
 		
-		y = (int) (Math.random() * 450) - 10;
-		
-		vx = (int) (Math.random()* 7) - 3;
-		
-		while(vx == 0) {
-			vx = (int) (Math.random()* 7) - 3;
-		}
-		
-		
+		super();
 	}
+
 	public Angelfish(String fileName) {
 		img = getImage("/imgs/" + fileName); 
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		init(x, y);
+		update();
+		
 	}
 	
 	public void changePicture(String newFileName) {
@@ -48,23 +38,11 @@ public class Angelfish {
 		
 		
 		update();
+		tx.setToTranslation(x, y);
 		g2.drawImage(img, tx, null);
 	}
 	
-	private void init(double a, double b) {
-		tx.setToTranslation(a, b);
-		tx.scale(1.5, 1.5);
-	}
-	private void update() {
-		if(x < 0) {
-			vx = -vx;
-		}
-		
-		tx.setToTranslation(x, y);
-		tx.scale(0.75, 0.75);
-	}
-
-	private Image getImage(String path) {
+	protected Image getImage(String path) {
 		Image tempImage = null;
 		try {
 			URL imageURL = Angelfish.class.getResource(path);
@@ -78,7 +56,38 @@ public class Angelfish {
 		// TODO Auto-generated method stub
 		return x;
 	}
+	public int getY() {
+		return y;
+	}
 	
 	
+	
+/*public void Reset() {
+		
+		dead = false;
+		
+		x = (int)(Math.random()*600);
+		y = (int)(Math.random()*500);
+		
+		vx = (int) (Math.random()*7)-3; 
+		vy = (int) (Math.random()*7)-3; 
+		
+		if(x > 600 || x < 0) {
+			vx = -vx;
+		}
+		if(y > 500 || y < 0) {
+			vy = -vy;
+			}
+		
+		while(vx == 0) {
+			vx = (int) (Math.random()*7)-3;
+		}
+		while(vy == 0) {
+			vy = (int) (Math.random()*7)-3;
+		}
+		
+
+	}
+	*/
 	
 }

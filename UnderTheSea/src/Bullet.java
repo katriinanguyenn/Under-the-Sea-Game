@@ -3,30 +3,31 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-public class Submarine {
+public class Bullet extends Submarine{
 
-	protected int x = 850; //position of the submarine
-	protected int y;
-	private int vx = 0; //for movement
+	private int x = 850;
+	private int y;
+	private int vx = 0;; //for movement
 	private int vy = 0;
 	private Image img; 	
 	private AffineTransform tx;
 	
+	Rectangle bul= new Rectangle(x, y, 25, 25);
 	
-	public Submarine() {
-		img = getImage("/imgs/submarine.png"); //load the image for submarine
+	public Bullet() {
+		img = getImage("/imgs/bullet.png"); //load the image for submarine
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		init(x, y);
 		
 	}
-	public Submarine(String fileName) {
+	public Bullet(String fileName) {
 		img = getImage("/imgs/" + fileName); 
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		init(x, y);
+		
 	}
 	
 	public void changePicture(String newFileName) {
@@ -49,14 +50,20 @@ public class Submarine {
 	}
 	private void update() {
 		
-		y = y + vy; //updates the velocity
+		x = x - vx; //updates the velocity
 		
-		tx.setToTranslation(x, y);
-		tx.scale(1.15, 1.15);
-		
-		if(y > 500 || y < 0) {
-			vy = -vy; // sets the boundaries at the top and bottom of the screen
+		tx.setToTranslation(x, y+10);
+		tx.scale(0.5, 0.5);
+
+		if(x > 1000) {
+			vx = -vx; // sets the boundaries at the top and bottom of the screen
 		}
+		
+		if(x < 0) {
+			x = 850;
+			vx = 0;
+		}
+		
 	}
 
 	private Image getImage(String path) {
@@ -70,41 +77,24 @@ public class Submarine {
 		return tempImage;
 	}
 	
-	
-	public void up() {
-		
-		vy = -4; //sets the velocity of the submarine
-		
-		
-		if(vy > 0) {  
-			y = y - vy;  //allows the submarine to move upwards
-		}
-		
-	}
-	public void down() {
-		
-		vy = 4; //sets the velocity of the submarine
-		
-		if(vy > 0) {
-			y = y + vy; //allows the submarine to move downwards
-		}
-		
-	
-	}
-	public void stop() {
-		vy = 0; //one the up or down arrow key is released, the submarine stops moving
+	public void move() {
+		vx = 4;
+		x = x - vx;
 	}
 	
-	
-	//getters for x and y
 	public int getX() {
 		return x;
 	}
 	
+	public void setX(int x) {
+		this.x = x;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
 	public int getY() {
 		return y;
 	}
-	
 	
 	
 	

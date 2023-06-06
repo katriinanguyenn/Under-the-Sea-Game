@@ -1,9 +1,11 @@
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,20 +27,76 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Submarine sub = new Submarine();
 	Kelp k = new Kelp();
 	Blobfish b = new Blobfish();
-	Shark s = new Shark();
-	Angelfish a = new Angelfish();
-	
-	
-	
+	MeanAnimals s = new Shark("shark.png");
+	NiceAnimals a = new Angelfish("angelfish.png");
+	Bullet bu = new Bullet();
+	NiceAnimals t = new Turtle("turtle!.png");
+	MeanAnimals p = new Shark("pufferfish.png");
+	MeanAnimals sting = new Stingray("stingray.png");
+	MeanAnimals angler = new AnglerFish("anglerfish.png");
+	Ground back = new Ground();
+	boolean dead;
+	int count = 50000;
+	int score;
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		
+		//paints all the graphics
+		back.paint(g);
 		sub.paint(g);
 		k.paint(g);
 		b.paint(g);
 		s.paint(g);
 		a.paint(g);
+		t.paint(g);
+		p.paint(g);
+		sting.paint(g);
+		angler.paint(g);
+		
+		bu.paint(g);
+		
+		bu.setY(sub.y); // sets the bullet to stay with the submarine
+		
+		//checks if each animal dies and updates score accordingly
+		if(a.die(bu)) {; //check for collision 60x per second
+			score = score - 100; // updates score
+			dead = true;
+			a.Reset();
+		}
+		if(t.die(bu)) {; //check for collision 60x per second
+			score = score - 100; // updates score
+			dead = true;
+			t.Reset();
+		}
+		if(s.die(bu)) {
+			score = score + 100; // updates score
+			dead = true;
+			s.Reset();
+		}
+		if(p.die(bu)) {
+			score = score + 100; // updates score
+			dead = true;
+			p.Reset();
+		}
+		if(sting.die(bu)) {
+			score = score + 100; // updates score
+			dead = true;
+			sting.Reset();
+		}
+		if(angler.die(bu)) {
+			score = score + 100; // updates score
+			dead = true;
+			angler.Reset();
+		}
+		
+		
+		g.setColor(Color.darkGray);
+		g.fillRect(30, 460, 100, 75);
+		g.setColor( Color.white);
+		Font plainFont = new Font("Candara" ,  Font.PLAIN, 25);
+		g.setFont(plainFont);
+		g.drawString("Score", 50, 485);
+		g.drawString(score + " ", 70, 515);
 		
 		
 		
@@ -93,20 +151,28 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		switch(arg0.getKeyCode()) {
 			case 38:
-				 sub.move(arg0);	
+				 sub.up();	
 				break;
 				
 			case 40:
-				sub.move(arg0);
+				sub.down();
+				break;
+				
+			case 32:
+				bu.move();
+				a.die(bu);
+				s.die(bu);
 				break;
 		}
-
+	
 	}
 
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		sub.stop();
+		
 		
 	}
 

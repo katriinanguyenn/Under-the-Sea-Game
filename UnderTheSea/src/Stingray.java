@@ -7,19 +7,19 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-public class Shark extends MeanAnimals{
+public class Stingray extends MeanAnimals{
 
 	public boolean dead;
 	private Image img; 	//for the image to show up
 	private AffineTransform tx; 
 	
 	
-	public Shark() {
+	public Stingray() {
 		
 		super();
 		
 	}
-	public Shark(String fileName) {
+	public Stingray(String fileName) {
 		img = getImage("/imgs/" + fileName); 
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		init(x, y);
@@ -45,7 +45,7 @@ public class Shark extends MeanAnimals{
 	
 	protected void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(1.5, 1.5);
+		tx.scale(2, 2);
 	}
 	protected void update() {
 		//stops the shark from moving backwards
@@ -64,13 +64,13 @@ public class Shark extends MeanAnimals{
 		y = y + vy;
 		
 		tx.setToTranslation(x, y);
-		tx.scale(1.2, 1.2);
+		tx.scale(4, 4);
 	}
 
 	protected Image getImage(String path) {
 		Image tempImage = null;
 		try {
-			URL imageURL = Shark.class.getResource(path);
+			URL imageURL = Stingray.class.getResource(path);
 			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 		} catch (Exception e) {
 			e.printStackTrace();

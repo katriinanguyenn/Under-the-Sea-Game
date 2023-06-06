@@ -7,19 +7,19 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-public class Shark extends MeanAnimals{
+public class Pufferfish extends MeanAnimals{
 
 	public boolean dead;
 	private Image img; 	//for the image to show up
 	private AffineTransform tx; 
 	
 	
-	public Shark() {
+	public Pufferfish() {
 		
 		super();
 		
 	}
-	public Shark(String fileName) {
+	public Pufferfish(String fileName) {
 		img = getImage("/imgs/" + fileName); 
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		init(x, y);
@@ -70,7 +70,7 @@ public class Shark extends MeanAnimals{
 	protected Image getImage(String path) {
 		Image tempImage = null;
 		try {
-			URL imageURL = Shark.class.getResource(path);
+			URL imageURL = Pufferfish.class.getResource(path);
 			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 		} catch (Exception e) {
 			e.printStackTrace();

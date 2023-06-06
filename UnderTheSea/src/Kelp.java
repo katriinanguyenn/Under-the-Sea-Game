@@ -42,7 +42,7 @@ public class Kelp {
 		tx.scale(.5, .5);
 	}
 	private void update() {
-		tx.setToTranslation(200, 350);
+		tx.setToTranslation(190, 375);
 		tx.scale(0.2, 0.2);
 	}
 	
